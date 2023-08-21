@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="robots" content="noindex,nofollow" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	
+<link href="home.css" type="text/css" rel="stylesheet">	
+<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+<style>
+body {
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+.demo-error {
+	display:inline-block;
+	color:#FF0000;
+	margin-left:5px;
+}
+input{	float:right;}
+
+.demo-input {
+	border-top:0!important;
+	border-left:0!important;
+	border-right:0!important;
+    width: 90%;
+    border-radius: 0px;
+    border: #CCC 1px solid;
+    padding: 10px;
+    margin-top: 5px;
+	line-height:17px;
+	margin-bottom:15px;
+
+}
+
+.demo-input-s {
+    width: 87%;
+    border-radius: 5px;
+    border: #CCC 1px solid;
+    padding: 10px;
+    margin-top: 5px;
+}
+.demo-btn {
+	font-size:15px;
+	padding: 10px;
+    border: 0px;
+    background: #bb230a;
+    color: #fff;
+	line-height:20px;
+    width: 92%;
+}
+.demo-table {
+  /*  background: #dcfddc;*/
+    border-radius: 5px;
+	border:none;
+    padding: 10px;
+}
+.demo-success {
+    margin-top: 5px;
+    color: #478347;
+    background: #e2ead1;
+    padding: 10px;
+    border-radius: 5px;
+}
+.captcha-input {
+	background:#FFF url('captcha_code.php') repeat-y;
+	padding-left: 75px; 	line-height:17px;
+}
+h4{font-size:18px;color:#6d4a44;}
+td{font-size:14px; color:#666;padding:0px;}
+td span span{color:red;}
+td span b{padding-left:20px;}
+</style>
+</head>
+<body style="max-width:800px; margin:50px;">
+	<h4>Wants Quick Updates from Us? Hurry to fill below contact form</h4>				
+	<form name="frmContact" onsubmit="formpost(); return false;"  id="a">
+	<table border="0" cellpadding="10" cellspacing="1"  class="demo-table col-12 col-s-12">
+	<tr class="tablerow">
+	<td  class="col-6 col-s-12 fl" style="">
+	<span class="fl"><b>First Name<span>*</span>:</b></span>
+	<span class="fr"><input type="text" name="userName" class="demo-input" placeholder="Please enter the first name" size="30" required></span>
+	</td>
+	
+	<td  class="col-6 col-s-12 fl"><span class="fl" style=""><b>Last Name<span>*</span>:</b></span><span class="fr">
+	<input type="text" name="lastName" class="demo-input" placeholder="Please enter the last name"  size="30" required></span>
+	</td></tr>
+
+	<tr class="tablerow">
+	<td  class="col-6 col-s-12 fl"><br><br><span class="fl"><b>Email<span>*</span>:</b></span><span class="fr"><input  placeholder="Please enter the email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="userEmail" class="demo-input" required  size="30"></span></div>
+	</td>
+	<td  class="col-6 col-s-12 fl"><br><br><span class="fl"><b>Subject:</b></span><span class="fr"><input  size="30" type="text"  placeholder="Please enter the subject" name="subject" class="demo-input" required></span>
+	</td></tr>
+
+	<tr class="tablerow" style="">
+	<td  class="col-6 col-s-12 fl"><br><br><span class="fl"><b>Message:</b></span><span class="fr"><textarea  style="width:90%;"  placeholder="Type content here" name="content" class="demo-input" rows="5" cols="30" required></textarea></span>
+	</td>
+	</tr>
+	<tr class="tablerow" style="">
+	<td  class="col-12 col-s-12 fr	" style="clear:both; display:flex; justify-content:right; align-items:right; margin:  auto;position:relative;">
+	<input style="cursor:pointer;  background:red; color:white; padding:10px 20px; border:none;	font-size:15pt;" type="submit" name="submit" value="Submit" class="">
+	</td></tr>
+	</table>
+	</form>
+<div id="demo-success"></div>	
+   
+		
+
+<script>
+	function formpost(){
+		var captcha = $("#cpt").val();
+		$.post("confirm.php",{ captcha_code : captcha } , function(data){
+			if(data == 'success'){
+				var x = document.forms["frmContact"]["userEmail"].value;
+						var y = document.forms["frmContact"]["userName"].value;
+						var atpos = x.indexOf("@");
+						var dotpos = x.lastIndexOf(".");
+						
+						if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length || y==null || y=='') {
+							alert("Please enter proper e-mail address & name");
+							return false;
+						}
+				 //document.getElementById("a").innerHTML = "<h4 id='a'>Thanks, It's Our Pleasure to Send you Latest Updates from our team</h4>";
+				 var r = confirm('Thank for filling contact form. We will respond quickly to your request');
+					if (r == true) {
+					document.getElementById("a").reset();
+					location.reload()
+					} 
+			}
+			else{
+				$("#error-captcha").html("Incorrect Code.....")
+			}
+		});
+	}
+</script>	 
+
+
+
+
+</body>
+</html>
